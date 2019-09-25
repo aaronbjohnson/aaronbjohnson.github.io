@@ -32,6 +32,10 @@ footer p {
   margin-bottom: .25rem;
 }
 
+.collapse:not(.show) {
+    display: none;
+}
+
 // Contents
 //
 // Navbar
