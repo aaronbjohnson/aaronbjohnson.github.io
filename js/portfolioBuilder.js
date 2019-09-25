@@ -3,7 +3,7 @@ var projects = {
         {
             "title" : "Brazil Fuel Prices",
             "dates" : "2019",
-            "description": "In this project I was given a web-based application that read RSS feeds. The goal was to use Jasmine to write test suites that would test the functionality of the application.",
+            "description": "Using data from Brazil's National Agency of Petroleum, Natural Gas, and Bio Fuels, I look at the change in fuel prices across the 5 regions of Brazil.",
             "links": [
                 "https://github.com/aaronbjohnson/brazil-fuel-prices_EDA",
                 "projects/litre-EDA.html"
