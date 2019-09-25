@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Aaron Johnson" />
+
+<meta name="date" content="2019-08-23" />
+
+<title>Brazil Gas Prices</title>
+
+<script src="litre-EDA_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="litre-EDA_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="litre-EDA_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="litre-EDA_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="litre-EDA_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="litre-EDA_files/navigation-1.1/tabsets.js"></script>
+<script src="litre-EDA_files/navigation-1.1/codefolding.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.co { font-style: italic; } /* Comment */
+code > span.al { font-weight: bold; } /* Alert */
+code > span.er { font-weight: bold; } /* Error */
+code > span.wa { font-style: italic; } /* Warning */
+code > span.cf { font-weight: bold; } /* ControlFlow */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.do { font-style: italic; } /* Documentation */
+code > span.an { font-style: italic; } /* Annotation */
+code > span.cv { font-style: italic; } /* CommentVar */
+code > span.in { font-style: italic; } /* Information */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Brazil Gas Prices</h1>
+<h4 class="author"><em>Aaron Johnson</em></h4>
+<h4 class="date"><em>August 23, 2019</em></h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#preparations">Preparations</a></li>
+<li><a href="#analysis">Analysis</a><ul>
+<li><a href="#data">Data</a></li>
+<li><a href="#preprocessing">Preprocessing</a><ul>
+<li><a href="#questions-to-answer">Questions to Answer</a></li>
+</ul></li>
+<li><a href="#results">Results</a><ul>
+<li><a href="#what-are-the-mean-market-values-of-each-type-of-fuel-across-the-5-regions">What are the mean market values of each type of fuel across the 5 regions?</a></li>
+<li><a href="#how-have-fuel-prices-changed-over-time-for-each-region">How have fuel prices changed over time for each region?</a></li>
+<li><a href="#how-have-fuel-prices-changed-from-2004-to-2019">How have fuel prices changed from 2004 to 2019?</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a><ul>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div class="figure">
+<img src="https://images.unsplash.com/reserve/pK02sCLwT3Op7AZBbdz6_msp_0701_6004.jpg?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1948&amp;q=80" />
+
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>The <strong>National Agency of Petroleum, Natural Gas and Bio Fuels</strong> (ANP) releases reports of fuel prices used throughout the country of Brazil. This particular <a href="https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil#2004-2019.tsv">dataset</a> comes from Kaggle, curtesy of Matheus Eduardo Freitag. In this report we’ll look at the change in price of different types of fuel across 5 main regions of Brazil.</p>
+</div>
+<div id="preparations" class="section level2">
+<h2>Preparations</h2>
+<p>Let’s load in the data and libraries we’ll need. We’ll use the <strong>tidyverse</strong> package to make data wrangling easier, and we’ll use the <strong>lubridate</strong> package to convert the date columns to a proper date data type. We’ll use the <strong>broom</strong> package to turn model data into dataframes, and we’ll use the <strong>purr</strong> package’s map function to apply operations to items in a list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(lubridate)
+<span class="kw">library</span>(purrr)
+<span class="kw">library</span>(broom)
+
+raw_gas &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;2004-2019.tsv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</code></pre></div>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>Let’s take a look at the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(raw_gas)</code></pre></div>
+<pre><code>## Observations: 106,823
+## Variables: 21
+## $ X                                 &lt;int&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9...
+## $ DATA.INICIAL                      &lt;fct&gt; 2004-05-09, 2004-05-09, 2004...
+## $ DATA.FINAL                        &lt;fct&gt; 2004-05-15, 2004-05-15, 2004...
+## $ REGIÃƒO                           &lt;fct&gt; CENTRO OESTE, CENTRO OESTE, ...
+## $ ESTADO                            &lt;fct&gt; DISTRITO FEDERAL, GOIAS, MAT...
+## $ PRODUTO                           &lt;fct&gt; ETANOL HIDRATADO, ETANOL HID...
+## $ NÃšMERO.DE.POSTOS.PESQUISADOS     &lt;int&gt; 127, 387, 192, 162, 103, 408...
+## $ UNIDADE.DE.MEDIDA                 &lt;fct&gt; R$/l, R$/l, R$/l, R$/l, R$/l...
+## $ PREÃ.O.MÃ.DIO.REVENDA             &lt;dbl&gt; 1.288, 1.162, 1.389, 1.262, ...
+## $ DESVIO.PADRÃƒO.REVENDA            &lt;dbl&gt; 0.016, 0.114, 0.097, 0.070, ...
+## $ PREÃ.O.MÃ.NIMO.REVENDA            &lt;dbl&gt; 1.190, 0.890, 1.180, 1.090, ...
+## $ PREÃ.O.MÃ.XIMO.REVENDA            &lt;dbl&gt; 1.350, 1.449, 1.760, 1.509, ...
+## $ MARGEM.MÃ.DIA.REVENDA             &lt;fct&gt; 0.463, 0.399, 0.419, 0.432, ...
+## $ COEF.DE.VARIAÃ.ÃƒO.REVENDA        &lt;dbl&gt; 0.012, 0.098, 0.070, 0.055, ...
+## $ PREÃ.O.MÃ.DIO.DISTRIBUIÃ.ÃƒO      &lt;fct&gt; 0.825, 0.763, 0.97, 0.83, 0....
+## $ DESVIO.PADRÃƒO.DISTRIBUIÃ.ÃƒO     &lt;fct&gt; 0.11, 0.088, 0.095, 0.119, 0...
+## $ PREÃ.O.MÃ.NIMO.DISTRIBUIÃ.ÃƒO     &lt;fct&gt; 0.4201, 0.5013, 0.5614, 0.59...
+## $ PREÃ.O.MÃ.XIMO.DISTRIBUIÃ.ÃƒO     &lt;fct&gt; 0.9666, 1.05, 1.161, 1.22242...
+## $ COEF.DE.VARIAÃ.ÃƒO.DISTRIBUIÃ.ÃƒO &lt;fct&gt; 0.133, 0.115, 0.098, 0.143, ...
+## $ MÃŠS                              &lt;int&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5...
+## $ ANO                               &lt;int&gt; 2004, 2004, 2004, 2004, 2004...</code></pre>
+<p>The loaded data contains 106823 rows and 20 columns.</p>
+<p>I’ll want to convert the column names from Portuguese to English to make the analysis easier as I go along. Also, I’ll translate the various fuel types to English as well.</p>
+</div>
+<div id="preprocessing" class="section level3">
+<h3>Preprocessing</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clean_gas &lt;-<span class="st"> </span>raw_gas <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>X) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">start_date =</span> DATA.INICIAL,
+         <span class="dt">end_date =</span> DATA.FINAL,
+         <span class="dt">region =</span> REGIÃƒO,
+         <span class="dt">state =</span> ESTADO,
+         <span class="dt">product =</span> PRODUTO,
+         <span class="dt">num_stations_analyzed =</span> NÃšMERO.DE.POSTOS.PESQUISADOS,
+         <span class="dt">measurement_unit =</span> UNIDADE.DE.MEDIDA,
+         <span class="dt">mean_market_value =</span> PREÃ.O.MÃ.DIO.REVENDA,
+         <span class="dt">standard_deviation =</span> DESVIO.PADRÃƒO.REVENDA,
+         <span class="dt">min_price_observed =</span> PREÃ.O.MÃ.NIMO.REVENDA,
+         <span class="dt">max_price_observed =</span> PREÃ.O.MÃ.XIMO.REVENDA,
+         <span class="dt">mean_price_margin =</span> MARGEM.MÃ.DIA.REVENDA,
+         <span class="dt">coefficient_of_variation =</span> COEF.DE.VARIAÃ.ÃƒO.REVENDA,
+         <span class="dt">mean_dist_price =</span> PREÃ.O.MÃ.DIO.DISTRIBUIÃ.ÃƒO,
+         <span class="dt">dist_standard_dev =</span> DESVIO.PADRÃƒO.DISTRIBUIÃ.ÃƒO,
+         <span class="dt">dist_min_price =</span> PREÃ.O.MÃ.NIMO.DISTRIBUIÃ.ÃƒO,
+         <span class="dt">dist_max_price =</span> PREÃ.O.MÃ.XIMO.DISTRIBUIÃ.ÃƒO,
+         <span class="dt">dist_coef_var =</span> COEF.DE.VARIAÃ.ÃƒO.DISTRIBUIÃ.ÃƒO,
+         <span class="dt">month =</span> MÃŠS,
+         <span class="dt">year =</span> ANO) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">start_date =</span> <span class="kw">ymd</span>(start_date),
+         <span class="dt">end_date =</span> <span class="kw">ymd</span>(end_date),
+         <span class="dt">mean_price_margin =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(mean_price_margin)),
+         <span class="dt">mean_dist_price =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(mean_dist_price)),
+         <span class="dt">dist_standard_dev =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dist_standard_dev)),
+         <span class="dt">dist_min_price =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dist_min_price)),
+         <span class="dt">dist_max_price =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dist_max_price)),
+         <span class="dt">dist_coef_var =</span> <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(dist_coef_var)),
+         <span class="dt">state =</span> <span class="kw">str_to_title</span>(state),
+         <span class="dt">product =</span> <span class="kw">str_to_title</span>(product),
+         <span class="dt">region =</span> <span class="kw">str_to_title</span>(region),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Etanol Hidratado&quot;</span>, <span class="st">&quot;Ethanol&quot;</span>),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Gasolina Comum&quot;</span>, <span class="st">&quot;Gasoline&quot;</span>),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Glp&quot;</span>, <span class="st">&quot;Propane&quot;</span>),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Gnv&quot;</span>, <span class="st">&quot;Compressed Natural Gas&quot;</span>),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Ã“Leo Diesel&quot;</span>, <span class="st">&quot;Diesel Oil&quot;</span>),
+         <span class="dt">product =</span> <span class="kw">str_replace</span>(product, <span class="st">&quot;Ã“LEO DIESEL S10&quot;</span>, <span class="st">&quot;Diesel Oil s10&quot;</span>),
+         <span class="dt">region =</span> <span class="kw">str_replace</span>(region, <span class="st">&quot;Nordeste&quot;</span>, <span class="st">&quot;Northeast&quot;</span>),
+         <span class="dt">region =</span> <span class="kw">str_replace</span>(region, <span class="st">&quot;Norte&quot;</span>, <span class="st">&quot;North&quot;</span>),
+         <span class="dt">region =</span> <span class="kw">str_replace</span>(region, <span class="st">&quot;Sudeste&quot;</span>, <span class="st">&quot;Southeast&quot;</span>),
+         <span class="dt">region =</span> <span class="kw">str_replace</span>(region, <span class="st">&quot;Sul&quot;</span>, <span class="st">&quot;South&quot;</span>),
+         <span class="dt">region =</span> <span class="kw">str_replace</span>(region, <span class="st">&quot;Centro Oeste&quot;</span>, <span class="st">&quot;Midwest&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(clean_gas)</code></pre></div>
+<pre><code>## Observations: 106,823
+## Variables: 20
+## $ start_date               &lt;date&gt; 2004-05-09, 2004-05-09, 2004-05-09, ...
+## $ end_date                 &lt;date&gt; 2004-05-15, 2004-05-15, 2004-05-15, ...
+## $ region                   &lt;chr&gt; &quot;Midwest&quot;, &quot;Midwest&quot;, &quot;Midwest&quot;, &quot;Mid...
+## $ state                    &lt;chr&gt; &quot;Distrito Federal&quot;, &quot;Goias&quot;, &quot;Mato Gr...
+## $ product                  &lt;chr&gt; &quot;Ethanol&quot;, &quot;Ethanol&quot;, &quot;Ethanol&quot;, &quot;Eth...
+## $ num_stations_analyzed    &lt;int&gt; 127, 387, 192, 162, 103, 408, 278, 10...
+## $ measurement_unit         &lt;fct&gt; R$/l, R$/l, R$/l, R$/l, R$/l, R$/l, R...
+## $ mean_market_value        &lt;dbl&gt; 1.288, 1.162, 1.389, 1.262, 1.181, 1....
+## $ standard_deviation       &lt;dbl&gt; 0.016, 0.114, 0.097, 0.070, 0.078, 0....
+## $ min_price_observed       &lt;dbl&gt; 1.190, 0.890, 1.180, 1.090, 1.050, 0....
+## $ max_price_observed       &lt;dbl&gt; 1.350, 1.449, 1.760, 1.509, 1.400, 2....
+## $ mean_price_margin        &lt;dbl&gt; 0.463, 0.399, 0.419, 0.432, 0.240, 0....
+## $ coefficient_of_variation &lt;dbl&gt; 0.012, 0.098, 0.070, 0.055, 0.066, 0....
+## $ mean_dist_price          &lt;dbl&gt; 0.825, 0.763, 0.970, 0.830, 0.941, 0....
+## $ dist_standard_dev        &lt;dbl&gt; 0.110, 0.088, 0.095, 0.119, 0.077, 0....
+## $ dist_min_price           &lt;dbl&gt; 0.42010, 0.50130, 0.56140, 0.59910, 0...
+## $ dist_max_price           &lt;dbl&gt; 0.96660, 1.05000, 1.16100, 1.22242, 1...
+## $ dist_coef_var            &lt;dbl&gt; 0.133, 0.115, 0.098, 0.143, 0.082, 0....
+## $ month                    &lt;int&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5...
+## $ year                     &lt;int&gt; 2004, 2004, 2004, 2004, 2004, 2004, 2...</code></pre>
+<p>Looking at the data, we can see that there are 3 levels of measurement for fuels. The measurement used for the more common fuel types (ethanol, gasoline, diesel oil, and diesel s10) is reais per liter.</p>
+<p>We also have the measurement units <em>reais per 13Kg</em>, and <em>reais per cubic meters</em>. These units of measurement are used for propane and compressed natural gas respectively. For this exploration I’d like to look at fuels with the same unit of measurement. Let’s stick with the more common fuel types measured in <em>reais per liter</em> mentioned earlier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">liter_fuel &lt;-<span class="st"> </span>clean_gas <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(product <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Ethanol&quot;</span>, <span class="st">&quot;Gasoline&quot;</span>, <span class="st">&quot;Diesel Oil&quot;</span>, <span class="st">&quot;Diesel Oil S10&quot;</span>))</code></pre></div>
+<div id="questions-to-answer" class="section level4">
+<h4>Questions to Answer</h4>
+<p>I want to look at the change in fuel prices across different areas of Brazil for different types of fuel. To do this, I can look at the <strong>mean market value</strong> across the different regions and states. Let’s define some questions to guide the exploration:</p>
+<ul>
+<li>What is the mean market value for each type of fuel across each of the 5 regions?</li>
+<li>How have have fuel prices changed over time for each region?</li>
+<li>What states have the biggest change in fuel prices?</li>
+<li>What states have shown the most change in fuel price from 2004 to 2019?</li>
+</ul>
+</div>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<div id="what-are-the-mean-market-values-of-each-type-of-fuel-across-the-5-regions" class="section level4">
+<h4>What are the mean market values of each type of fuel across the 5 regions?</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">liter_fuel <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(region, product) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanMarketValue =</span> <span class="kw">mean</span>(mean_market_value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(region, meanMarketValue)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> product), <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;region&quot;</span>),
+    <span class="dt">y =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;mean market value&quot;</span>),
+    <span class="dt">title =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Difference in fuel price by region&quot;</span>),
+    <span class="dt">subtitle =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Mean market value for each type of fuel&quot;</span>),
+    <span class="dt">caption =</span> <span class="st">&quot;Data source: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_ilo</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>()</code></pre></div>
+<p><img src="litre-EDA_files/figure-html/unnamed-chunk-8-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Here we see that Diesel Oil s10 and Gasoline have the highest mean market values in every region. Let’s go beyond each region and see how the mean market value for each type of fuel compares across the states.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">liter_fuel <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(state, region, product) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanMarketValue =</span> <span class="kw">mean</span>(mean_market_value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">state =</span> <span class="kw">fct_reorder</span>(state, meanMarketValue)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(state, meanMarketValue)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> region),<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;state&quot;</span>),
+    <span class="dt">y =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;mean market value&quot;</span>),
+    <span class="dt">title =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Difference in mean market value for ethanol by state&quot;</span>),
+    <span class="dt">caption =</span> <span class="st">&quot;Data source: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_log10</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>product) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_ilo</span>() </code></pre></div>
+<p><img src="litre-EDA_files/figure-html/unnamed-chunk-9-1.png" width="864" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#theme(legend.position = &quot;none&quot;)</span></code></pre></div>
+<p>Here we can see that the state of Acre appears to have the highest mean market values for fuel, while Sao Paulo appears to have the lowest.</p>
+</div>
+<div id="how-have-fuel-prices-changed-over-time-for-each-region" class="section level4">
+<h4>How have fuel prices changed over time for each region?</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">liter_fuel <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(region, year, product) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanMarketValue =</span> <span class="kw">mean</span>(mean_market_value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, meanMarketValue)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> product)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>,
+    <span class="dt">y =</span> <span class="st">&quot;Mean Market Value&quot;</span>,
+    <span class="dt">title =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Mean market value over time&quot;</span>),
+    <span class="dt">caption =</span> <span class="st">&quot;Data source: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_log10</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>region) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_ilo</span>()</code></pre></div>
+<p><img src="litre-EDA_files/figure-html/unnamed-chunk-10-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>In 2008 the National Council on the Environment issued a resolution which required the ANP to develop a fuel standard to enable the introduction of diesel fuel with a 10 mg/kg maximum sulfur limit (s10). Over the next few years, more and more states were required to start replacing S1800 and S1500 fuels for the s10. This would explain why we only see records for <em>Diesel s10</em> after 2008.</p>
+<p>Each type of fuel appears to follow the same general pattern across the 5 regions, with the Midwest having less of a tight grouping between Ethanol, Diesel Oil, and Diesel s10 prices. We also notice a convergence of mean market value between each type of fuel as time goes on.</p>
+</div>
+<div id="how-have-fuel-prices-changed-from-2004-to-2019" class="section level4">
+<h4>How have fuel prices changed from 2004 to 2019?</h4>
+<p>In the above graph we saw how the mean market value generally followed the same patterns across all fuel types. It will be interesting to visualize the change in mean market value from 2004 to 2019 for each state.To do this, let’s combine the mean market value for each fuel type for each state.This will give us a general mean market value that will represent all fuel types for a specific state. We can then track the value over time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">by_state &lt;-<span class="st"> </span>liter_fuel <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(year, state) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanMarketValue =</span> <span class="kw">mean</span>(mean_market_value))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">change_df &lt;-<span class="st"> </span>by_state <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span> <span class="op">|</span><span class="st"> </span>year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(year) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">state =</span> <span class="kw">fct_reorder</span>(state, meanMarketValue, last))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make the altered version of change_df for the labels in the plot used below</span>
+mean_market_value &lt;-<span class="st"> </span>change_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(state) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_market_value_per_state =</span> <span class="kw">mean</span>(meanMarketValue)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">change_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="kw">aes</span>(meanMarketValue, state),
+            <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">1.5</span>, <span class="st">&quot;mm&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(
+    <span class="kw">aes</span>(<span class="dt">x =</span> meanMarketValue,
+        <span class="dt">y =</span> state,
+        <span class="dt">label =</span> <span class="kw">round</span>(meanMarketValue, <span class="dv">2</span>),
+        <span class="dt">hjust =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> &quot;2004&quot;</span>,
+                       <span class="fl">1.4</span>,
+                       <span class="op">-</span><span class="fl">0.4</span>)
+        ),
+    <span class="dt">size =</span> <span class="dv">3</span>,
+    <span class="dt">family =</span> <span class="st">&quot;Bookman&quot;</span>,
+    <span class="dt">color =</span> <span class="st">&quot;gray25&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="co"># Add labels to the plot</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="st">&quot;Mean Martek Value&quot;</span>,
+    <span class="dt">y =</span> <span class="st">&quot;State&quot;</span>,
+    <span class="dt">title =</span> <span class="st">&quot;Change in mean fuel price from 2004 to 2019&quot;</span>,
+    <span class="dt">subtitle =</span> <span class="st">&quot;Mean fuel price across similar fuel types: Diesel, Diesel s10, Etanol, and Gasoline&quot;</span>,
+    <span class="dt">caption =</span> <span class="st">&quot;Data source: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_ilo</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> mean_market_value,
+            <span class="kw">aes</span>(<span class="dt">y =</span> state,
+                <span class="dt">x =</span> mean_market_value_per_state,
+                <span class="dt">label =</span> state),
+            <span class="dt">vjust =</span> <span class="fl">1.5</span>,
+            <span class="dt">family =</span> <span class="st">&quot;Bookman&quot;</span>,
+            <span class="dt">color =</span> <span class="st">&quot;gray25&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="co"># Remove axes and grids</span>
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),
+    <span class="co"># Reduce the font size of the subtitle</span>
+    <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">9</span>)
+  )</code></pre></div>
+<p><img src="litre-EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Here we can see that Acre had the highest mean market value in 2004 and ended with the highest in 2019. Sao Paulo started out with the lowest mean market value and ended with the lowest in 2019. While being able to see how much the mean market value has changed for each state, it would be nice to see the <em>rate</em> of change as well. Let’s visualize this as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">by_state_region &lt;-<span class="st"> </span>liter_fuel <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(year, state, region) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanMarketValue =</span> <span class="kw">mean</span>(mean_market_value))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_coefficients &lt;-<span class="st"> </span>by_state_region <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>state, <span class="op">-</span>region) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(meanMarketValue <span class="op">~</span><span class="st"> </span>year,.))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tidied =</span> <span class="kw">map</span>(models, tidy)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest</span>(tidied)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_changes &lt;-<span class="st"> </span>state_coefficients <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(term <span class="op">==</span><span class="st"> &quot;year&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">p.adjust</span>(p.value) <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">05</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(state, region, estimate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">rate_of_change =</span> estimate)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_changes <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">state =</span> <span class="kw">fct_reorder</span>(state, rate_of_change)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(state, rate_of_change)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> region),<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="st">&quot;State&quot;</span>,
+    <span class="dt">y =</span> <span class="st">&quot;Rate of Change&quot;</span>,
+    <span class="dt">title =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Yearly rate of increase in mean market value for all fuel&quot;</span>),
+    <span class="dt">subtitle =</span> <span class="kw">str_to_title</span>(<span class="st">&quot;Mean market value across similar fuel types: Diesel, Diesel s10, Ethanol, and Gasoline&quot;</span>),
+    <span class="dt">caption =</span> <span class="st">&quot;Data source: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_ilo</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="ot">NULL</span>) </code></pre></div>
+<p><img src="litre-EDA_files/figure-html/unnamed-chunk-18-1.png" width="864" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#theme(legend.position = &quot;none&quot;) </span></code></pre></div>
+<p>For the state of Acre, there was a 15 percent increase per year in the combined mean market value for all fuel types. Mato Grosso showed the least amount of change, with an increase of about 11 percent per year.</p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>In this exploration, we looked at 4 different fuel types used in Brazil. Of those 4, Gasoline and Diesel Oil s10 had the highest mean market value in all 5 regions. When we compared fuel prices across the 5 regions we found that each region followed a similar pattern. We also saw that over time, as fuel prices increased, each fuel type began to be priced within a closer range. Finally, we saw that the state of Acre (located in the North region) had the highest mean market value for fuel and had the highest rate of increase in mean market value per year.</p>
+<div id="references" class="section level3">
+<h3>References</h3>
+<ul>
+<li>Photography credit: Photo by Markus Spiske on Upslash (<span class="citation">@markusspiske</span>)</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,12 +1,12 @@
 var projects = {
     "projects": [
         {
-            "title" : "Brazil Gas Prices",
+            "title" : "Brazil Fuel Prices",
             "dates" : "2019",
             "description": "In this project I was given a web-based application that read RSS feeds. The goal was to use Jasmine to write test suites that would test the functionality of the application.",
             "links": [
                 "https://github.com/aj65461/frontend-nanodegree-feedreader",
-                "http://aj65461.github.io/frontend-nanodegree-feedreader/"
+                "projects/litre-EDA.html"
             ],
             "images": ["https://images.unsplash.com/reserve/pK02sCLwT3Op7AZBbdz6_msp_0701_6004.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1948&q=80"]
         }
