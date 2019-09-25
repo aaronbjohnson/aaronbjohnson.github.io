@@ -1,305 +1,33 @@
-* {
-    font-family: 'Roboto', sans-serif;
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
-/*
-div {
-    border: 1px solid red;
-}
-*/
-
-/*Added .online-entry for the new onlineschoolStart variable I added to the helper.js*/
-.education-entry, 
-.work-entry, 
-.project-entry, 
-.online-entry {
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 4%;
-    padding-bottom: 4%;
+.jumbotron p:last-child {
+  margin-bottom: 0;
 }
 
-h1 {
-    font-size: 40px;
-    color: #F7464A;
-    line-height: 48px;
-    display: inline;
+.jumbotron-heading {
+  font-weight: 300;
 }
 
-h2 {
-    font-weight: bold;
-    font-size: 24px;
-    color: #999999;
-    line-height: 29px;
-    padding: 10px;
+.jumbotron .container {
+  max-width: 40rem;
 }
 
-h3 {
-    font-style: italic;
-    font-size: 20px;
-    color: #000000;
-    line-height: 22px;
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-h4 {
-    font-weight: bold;
-    font-size: 14px;
-    color: #4d4946;
-    line-height: 17px;
+footer p {
+  margin-bottom: .25rem;
 }
-
-h2, 
-h3, 
-h4, 
-h5 {
-    padding:10px;
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-/* Add part of an hr style from Glyph, by Harry Roberts */
-hr {
-    border: 0;
-    height: 0;
-    border-top: 3px solid #000;
-}
-
-.date-text {
-    font-style: italic;
-    font-size: 14px;
-    color: #999999;
-    line-height: 16px;
-    float: left;
-}
-
-.location-text {
-    font-style: italic;
-    font-size: 14px;
-    color: #999999;
-    line-height: 16px;
-    float: right;
-}
-
-p {
-    font-size: 14px;
-    color: #333333;
-    line-height: 21px;
-}
-
-a {
-    color: #000000;
-    text-decoration: none;
-    margin-top: 10px;
-    display: block;
-    font-weight: bold;
-}
-
-a:visited,
-a:active,
-a:link {
-    text-decoration: none;
-    color: #000000;
-}
-
-a:hover {
-    text-decoration: none;
-    color: #46BFBD;
-}
-
-a.inText {
-    display: inline;
-}
-
-.welcome-message {
-    font-size: 14px;
-    color: #333333;
-    line-height: 21px;
-    display: block;
-}
-
-#skillsH3 {
-    color: #000000;
-    display: none;
-    margin-bottom: 1px;
-}
-
-#skills {
-    display: none;
-    margin-top: 1px;
-}
-
-.orange {
-    background-color: #F7464A; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    color: #ffffff;
-}
-/*Add this to separate text since they're the same color now.*/
-.bold-text {
-    font-weight: bold;
-    color: #000000;
-}
-
-.black-text {
-    color: #000000;
-}
-
-.white-text {
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.gray {
-    background-color: #f3f3f3;
-    padding-bottom: 10px;
-    clear: both;
-}
-
-/* Add background image to header*/
-#header {
-    /*background: url('../images/headerbackground.jpg'); */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-.flex-box {
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10px;
-}
-
-/*Added this to allow control over url color*/
-#onlineUrl {
-    font-weight: lighter;
-    font-size: small;
-}
-
-
-ul {
-    list-style-type: none;
-}
-
-.biopic {
-    float: left;
-    padding: 10px 10px 80px 10px;
-    width: 200px;
-    display: none;
-}
-
-img {
-    padding: 10px;
-}
-
-/* Bar chart stuff */
-.chart div {
-    font: 10px sans-serif;
-    background-color: #4d4946;
-    text-align: right;
-    padding: 3px;
-    margin: 1px;
-    height: 12px;
-    color: white;
-    display: inline-block;
-}
-
-.btn {
-    display: inline;
-}
-
-.gray2 {
-    color: #999999;
-}
-
-span {
-    padding: 5px;
-}
-
-#letsConnect {
-    text-align: center;
-}
-
-.socialLogo {
-    height: 24px;
-    padding: 5px;
-}
-
-@media only screen and (max-width: 1024px) {
-
-    #letsConnect {
-        margin-top: 5%;
-    }
-
-}
-
-@media only screen and (max-width:900px) {
-
-    .biopic {
-        width: 175px;
-    }
-
-}
-
-@media only screen and (max-width: 750px) {
-
-    #letsConnect {
-        margin-top: 10%;
-    }
-
-    .biopic {
-        width: 150px;
-    }
-
-    .welcome-message {
-        display: none;
-    }
-}
-
-#map {
-    display: block;
-    height: 100%;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-#mapDiv {
-    height: 400px;
-    width: 100%;
-    padding-bottom: 5%;
-}
-
-@media only screen and (min-width: 750px) {
-    #skillsH3,
-    #skills,
-    .biopic {
-        display: block;
-    }
-}
-/*Added this to make role move to new line when screen size is reduced.*/
-@media only screen and (max-width: 444px) {
-    #name,
-    #role {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-    }
-}
-/*Added this to fix map overlapping the 'Let's Connect' row*/
-@media only screen and (max-width: 560px) {
-
-    #letsConnect {
-        padding-top: 40px;
-    }
-
-    .projectpic {
-        max-width: 100%;
-    }
-}
-

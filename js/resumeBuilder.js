@@ -29,10 +29,14 @@ var projects = {
             $(".card-body:last").append(formattedDescription);
             $(".card-body:last").append(HTMLprojectLinks);
             $(".link-bar:last").append(HTMLprojectButtons);
+
+            $(".btn-group:last").append(HTMLbuttonForm);
+
+
             var formattedView = HTMLprojectView.replace("%data%", projects.projects[project].links[1]);
-            $(".btn-group:last").append(formattedView);
+            $(".btn-form:last").append(formattedView);
             var formattedCode = HTMLprojectCode.replace("%data%", projects.projects[project].links[0]);
-            $(".btn-group:last").append(formattedCode);
+            $(".btn-form:last").append(formattedCode);
             var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
             $(".link-bar:last").append(formattedDates);
         };
