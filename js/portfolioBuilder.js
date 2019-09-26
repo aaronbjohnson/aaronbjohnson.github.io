@@ -18,7 +18,7 @@ var projects = {
                 "https://github.com/aaronbjohnson/moneyball_project",
                 "projects/moneyball/moneyball.html"
             ],
-            "images": ["projects\\moneyball\\_icon_money-ball.png"]
+            "images": ["projects/moneyball/_icon_money-ball.png"]
         }
     ],
 
