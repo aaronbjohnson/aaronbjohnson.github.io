@@ -9,6 +9,16 @@ var projects = {
                 "projects/litre-EDA.html"
             ],
             "images": ["https://images.unsplash.com/reserve/pK02sCLwT3Op7AZBbdz6_msp_0701_6004.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1948&q=80"]
+        },
+        {
+            "title" : "Moneyball",
+            "dates" : "2019",
+            "description": "In this project I recreate and explore the problem faced by the Oakland athletics baseball team in 2002.",
+            "links": [
+                "https://github.com/aaronbjohnson/moneyball_project",
+                "projects/moneyball/moneyball.html"
+            ],
+            "images": ["projects\\moneyball\\_icon_money-ball.png"]
         }
     ],
 
